@@ -2,11 +2,14 @@
   "name": "dotnet-to-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {                          
-    "build": "tsc",                     
-    "dev": "tsc --watch",              
-    "test": "vitest"                    
+  "main": "dist/cli.js",
+  "bin": {
+    "dotnet-to-ts": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
