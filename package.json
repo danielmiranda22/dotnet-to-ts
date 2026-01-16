@@ -1,0 +1,25 @@
+{
+  "name": "dotnet-to-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {                          
+    "build": "tsc",                     
+    "dev": "tsc --watch",              
+    "test": "vitest"                    
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/node": "^25.0.9",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.17"
+  },
+  "dependencies": {
+    "commander": "^14.0.2",
+    "glob": "^13.0.0"
+  }
+}
