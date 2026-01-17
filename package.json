@@ -9,7 +9,9 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "vitest"
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +20,7 @@
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/node": "^25.0.9",
+    "@vitest/ui": "^4.0.17",
     "typescript": "^5.9.3",
     "vitest": "^4.0.17"
   },

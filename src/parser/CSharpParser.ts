@@ -12,7 +12,7 @@ export interface ParsedClass {
   properties: Property[];
 }
 
-export class CSharperParser {
+export class CSharpParser {
   /**
    * Parses the given C# code and extracts class definitions along with their properties.
    * @param csharpCode - The C# code to parse.
@@ -24,7 +24,7 @@ export class CSharperParser {
 
     const properties = this.extractProperties(csharpCode);
 
-    return { name: className, properties };
+    return { name: className, properties: properties };
   }
 
   /**

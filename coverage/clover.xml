@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1768669173366" clover="3.2.0">
+  <project timestamp="1768669173366" name="All files">
+    <metrics statements="14" coveredstatements="14" conditionals="10" coveredconditionals="8" methods="3" coveredmethods="3" elements="27" coveredelements="25" complexity="0" loc="14" ncloc="14" packages="1" files="1" classes="1"/>
+    <file name="CSharpParser.ts" path="C:\dev\production\tools\npm-dotnet-to-ts\dotnet-to-ts\src\parser\CSharpParser.ts">
+      <metrics statements="14" coveredstatements="14" conditionals="10" coveredconditionals="8" methods="3" coveredmethods="3"/>
+      <line num="22" count="13" type="stmt"/>
+      <line num="23" count="13" type="cond" truecount="2" falsecount="0"/>
+      <line num="25" count="12" type="stmt"/>
+      <line num="27" count="12" type="stmt"/>
+      <line num="37" count="12" type="stmt"/>
+      <line num="46" count="12" type="stmt"/>
+      <line num="49" count="12" type="stmt"/>
+      <line num="50" count="18" type="stmt"/>
+      <line num="56" count="12" type="stmt"/>
+      <line num="68" count="13" type="stmt"/>
+      <line num="69" count="13" type="stmt"/>
+      <line num="70" count="13" type="cond" truecount="4" falsecount="0"/>
+      <line num="71" count="12" type="stmt"/>
+      <line num="73" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
