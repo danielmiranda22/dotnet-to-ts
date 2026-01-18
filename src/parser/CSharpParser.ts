@@ -43,7 +43,7 @@ export class CSharpParser {
     // (\w+)               - capture group 2: property name
     // \s*\{\s*get;\s*set;\s*\}  - property getter/setter syntax
     const propertyRegex =
-      /public\s+(\w+(?:<\w+>)?)\s+(\w+)\s*\{\s*get;\s*set;\s*\}/g;
+      /public\s+(\w+(?:<\w+>)?\??)\s+(\w+)\s*\{\s*get;\s*set;\s*\}/g;
 
     let match;
     while ((match = propertyRegex.exec(csharpCode)) !== null) {
