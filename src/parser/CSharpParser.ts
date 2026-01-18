@@ -3,8 +3,8 @@
  */
 
 export interface Property {
-  name: string;
-  type: string;
+  name: string | undefined;
+  type: string | undefined;
 }
 
 export interface ParsedClass {
@@ -37,10 +37,13 @@ export class CSharpParser {
     const properties: Property[] = [];
 
     // Regex explanation:
-    // public\s+           - literal "public" followed by whitespace
-    // (\w+(? : <\w+>)?)     - capture group 1: type name (with optional generic like List<string>)
-    // \s+                 - whitespace
-    // (\w+)               - capture group 2: property name
+    // public\s+              - literal "public" followed by whitespace
+    // (\w+(?:<\w+>)?\??)     - capture group 1: type name
+    //   \w+                  - base type (int, string, etc.)
+    //   (?: <\w+>)?           - optional generic (<string>)
+    //   \??                  - optional nullable (?)
+    // \s+                    - whitespace
+    // (\w+)                  - capture group 2: property name
     // \s*\{\s*get;\s*set;\s*\}  - property getter/setter syntax
     const propertyRegex =
       /public\s+(\w+(?:<\w+>)?\??)\s+(\w+)\s*\{\s*get;\s*set;\s*\}/g;
@@ -48,8 +51,8 @@ export class CSharpParser {
     let match;
     while ((match = propertyRegex.exec(csharpCode)) !== null) {
       properties.push({
-        type: match[1] ?? '', // Type (e.g., "int", "string", "List<string>")
-        name: match[2] ?? '', // Property name (e.g., "Id", "Name")
+        type: match[1], // Type (e.g., "int", "string", "List<string>")
+        name: match[2], // Property name (e.g., "Id", "Name")
       });
     }
 
