@@ -45,6 +45,12 @@ export class TypeMapper {
       console.log('Matched list type:', listMatch[1]);
       const elementType = this.map(listMatch[1]);
       const mappedInnerType = this.map(elementType);
+
+      // If inner type is a union (contains "|"), wrap in parentheses
+      if (mappedInnerType.includes('|')) {
+        return `(${mappedInnerType})[]`;
+      }
+
       return `${mappedInnerType}[]`;
     }
 

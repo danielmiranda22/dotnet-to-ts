@@ -1,23 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1768766458352" clover="3.2.0">
-  <project timestamp="1768766458352" name="All files">
-    <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3" elements="23" coveredelements="23" complexity="0" loc="14" ncloc="14" packages="1" files="1" classes="1"/>
-    <file name="CSharpParser.ts" path="C:\dev\production\tools\npm-dotnet-to-ts\dotnet-to-ts\src\parser\CSharpParser.ts">
+<coverage generated="1768817808935" clover="3.2.0">
+  <project timestamp="1768817808936" name="All files">
+    <metrics statements="42" coveredstatements="42" conditionals="25" coveredconditionals="25" methods="4" coveredmethods="4" elements="71" coveredelements="71" complexity="0" loc="42" ncloc="42" packages="2" files="2" classes="2"/>
+    <package name="mapper">
+      <metrics statements="28" coveredstatements="28" conditionals="19" coveredconditionals="19" methods="1" coveredmethods="1"/>
+      <file name="TypeMapper.ts" path="C:\dev\production\tools\npm-dotnet-to-ts\dotnet-to-ts\src\mapper\TypeMapper.ts">
+        <metrics statements="28" coveredstatements="28" conditionals="19" coveredconditionals="19" methods="1" coveredmethods="1"/>
+        <line num="6" count="52" type="stmt"/>
+        <line num="35" count="123" type="stmt"/>
+        <line num="36" count="123" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="11" type="stmt"/>
+        <line num="38" count="11" type="stmt"/>
+        <line num="39" count="11" type="stmt"/>
+        <line num="43" count="112" type="stmt"/>
+        <line num="44" count="112" type="cond" truecount="4" falsecount="0"/>
+        <line num="45" count="12" type="stmt"/>
+        <line num="46" count="12" type="stmt"/>
+        <line num="47" count="12" type="stmt"/>
+        <line num="50" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="3" type="stmt"/>
+        <line num="54" count="9" type="stmt"/>
+        <line num="58" count="100" type="stmt"/>
+        <line num="59" count="100" type="cond" truecount="4" falsecount="0"/>
+        <line num="60" count="4" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
+        <line num="65" count="96" type="stmt"/>
+        <line num="68" count="96" type="cond" truecount="5" falsecount="0"/>
+        <line num="69" count="8" type="stmt"/>
+        <line num="70" count="8" type="stmt"/>
+        <line num="71" count="8" type="stmt"/>
+        <line num="72" count="8" type="stmt"/>
+        <line num="73" count="8" type="stmt"/>
+        <line num="77" count="88" type="cond" truecount="2" falsecount="0"/>
+        <line num="78" count="65" type="stmt"/>
+        <line num="83" count="23" type="stmt"/>
+      </file>
+    </package>
+    <package name="parser">
       <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
-      <line num="22" count="30" type="stmt"/>
-      <line num="23" count="30" type="cond" truecount="2" falsecount="0"/>
-      <line num="25" count="27" type="stmt"/>
-      <line num="27" count="27" type="stmt"/>
-      <line num="37" count="27" type="stmt"/>
-      <line num="49" count="27" type="stmt"/>
-      <line num="52" count="27" type="stmt"/>
-      <line num="53" count="55" type="stmt"/>
-      <line num="59" count="27" type="stmt"/>
-      <line num="71" count="30" type="stmt"/>
-      <line num="72" count="30" type="stmt"/>
-      <line num="73" count="30" type="cond" truecount="4" falsecount="0"/>
-      <line num="74" count="27" type="stmt"/>
-      <line num="76" count="3" type="stmt"/>
-    </file>
+      <file name="CSharpParser.ts" path="C:\dev\production\tools\npm-dotnet-to-ts\dotnet-to-ts\src\parser\CSharpParser.ts">
+        <metrics statements="14" coveredstatements="14" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="22" count="30" type="stmt"/>
+        <line num="23" count="30" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="27" type="stmt"/>
+        <line num="27" count="27" type="stmt"/>
+        <line num="37" count="27" type="stmt"/>
+        <line num="49" count="27" type="stmt"/>
+        <line num="52" count="27" type="stmt"/>
+        <line num="53" count="55" type="stmt"/>
+        <line num="59" count="27" type="stmt"/>
+        <line num="71" count="30" type="stmt"/>
+        <line num="72" count="30" type="stmt"/>
+        <line num="73" count="30" type="cond" truecount="4" falsecount="0"/>
+        <line num="74" count="27" type="stmt"/>
+        <line num="76" count="3" type="stmt"/>
+      </file>
+    </package>
   </project>
 </coverage>
