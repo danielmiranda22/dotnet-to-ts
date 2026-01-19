@@ -57,7 +57,7 @@ export class TypeScriptGenerator {
     } else {
       parsedClass.properties.forEach((property) => {
         // Map C# type to TypeScript type
-        const tsType = this.typeMapper.map(property.type || 'any');
+        const tsType = this.typeMapper.map(property.type ?? 'any');
 
         // Add property line
         lines.push(`${this.options.indentation}${property.name}: ${tsType};`);
