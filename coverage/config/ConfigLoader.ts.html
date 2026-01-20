@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for generator/TypeScriptGenerator.ts</title>
+    <title>Code coverage report for config/ConfigLoader.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">generator</a> TypeScriptGenerator.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">config</a> ConfigLoader.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/22</span>
+                <span class='fraction'>25/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>24/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/22</span>
+                <span class='fraction'>25/25</span>
             </div>
         
             
@@ -150,7 +150,23 @@
 <a name='L85'></a><a href='#L85'>85</a>
 <a name='L86'></a><a href='#L86'>86</a>
 <a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -166,15 +182,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -184,144 +210,166 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">89x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * TypeScriptGenerator - Generates TypeScript interface code from parsed C# classes
+ * ConfigLoader - Loads and validates dotnet-to-ts configuration
  */
 &nbsp;
-import { ParsedClass } from '../parser/CSharpParser';
-import { TypeMapper } from '../mapper/TypeMapper';
+import * as fs from 'fs';
+import * as path from 'path';
+import { DotnetToTsConfig, DEFAULT_CONFIG } from './Config';
 &nbsp;
-export interface GeneratorOptions {
-  indentation?: string; // Default: 2 spaces
-  addTimestamp?: boolean; // Add generation timestamp comment
-  exportInterfaces?: boolean; // Add "export" keyword
-}
+export class ConfigLoader {
+  /**
+   * Loads config from a JSON file
+   * @param configPath - Path to config file (default: "dotnet-to-ts.config.json")
+   * @returns Parsed and validated config
+   */
+  load(configPath: string = 'dotnet-to-ts.config.json'): DotnetToTsConfig {
+    // Check if file exists
+    if (!fs.existsSync(configPath)) {
+      throw new Error(`Config file not found: ${configPath}`);
+    }
 &nbsp;
-export class TypeScriptGenerator {
-  private typeMapper: TypeMapper;
-  private options: Required&lt;GeneratorOptions&gt;;
+    // Read file
+    const fileContent = fs.readFileSync(configPath, 'utf-8');
 &nbsp;
-  constructor(options: GeneratorOptions = {}) {
-    this.typeMapper = new TypeMapper();
+    // Parse JSON
+    let parsed: any;
+    try {
+      parsed = JSON.parse(fileContent);
+    } catch (error) {
+      throw new Error(`Invalid JSON in config file: ${configPath}`);
+    }
 &nbsp;
-    // Set defaults
-    this.options = {
-      indentation: options.indentation ?? '  ', // 2 spaces
-      addTimestamp: options.addTimestamp ?? true,
-      exportInterfaces: options.exportInterfaces ?? true,
+    // Validate and merge with defaults
+    const config = this.validate(parsed);
+&nbsp;
+    return config;
+  }
+&nbsp;
+  /**
+   * Validates config and merges with defaults
+   * @param parsed - Parsed JSON object
+   * @returns Valid config
+   */
+  private validate(parsed: any): DotnetToTsConfig {
+    // Validate input
+    if (!parsed.input) {
+      throw new Error('Config must have "input" field');
+    }
+&nbsp;
+    if (!Array.isArray(parsed.input)) {
+      throw new Error('"input" must be an array of glob patterns');
+    }
+&nbsp;
+    if (parsed.input.length === 0) {
+      throw new Error('"input" array cannot be empty');
+    }
+&nbsp;
+    // Validate output
+    if (!parsed.output) {
+      throw new Error('Config must have "output" field');
+    }
+&nbsp;
+    if (typeof parsed.output !== 'string') {
+      throw new Error('"output" must be a string');
+    }
+&nbsp;
+    // Merge with defaults
+    const config: DotnetToTsConfig = {
+      input: parsed.input,
+      output: parsed.output,
+      options: {
+        indentation:
+          parsed.options?.indentation ?? DEFAULT_CONFIG.options?.indentation,
+        addTimestamp:
+          parsed.options?.addTimestamp ?? DEFAULT_CONFIG.options?.addTimestamp,
+        exportInterfaces:
+          parsed.options?.exportInterfaces ??
+          DEFAULT_CONFIG.options?.exportInterfaces,
+      },
     };
+&nbsp;
+    return config;
   }
 &nbsp;
   /**
-   * Generates TypeScript interface code from a parsed C# class
-   * @param parsedClass - The parsed C# class
-   * @returns TypeScript interface as a string
+   * Loads config or returns default if file doesn't exist
+   * @param configPath - Path to config file
+   * @returns Config (from file or default)
    */
-  generate(parsedClass: ParsedClass): string {
-    const lines: string[] = [];
-&nbsp;
-    // Add header comment with timestamp (optional)
-    if (this.options.addTimestamp) {
-      lines.push('/**');
-      lines.push(' * Auto-generated by dotnet-to-ts');
-      lines.push(` * Generated on: ${new Date().toISOString()}`);
-      lines.push(' * DO NOT EDIT MANUALLY');
-      lines.push(' */');
-      lines.push('');
+  loadOrDefault(
+    configPath: string = 'dotnet-to-ts.config.json',
+  ): DotnetToTsConfig {
+    try {
+      return this.load(configPath);
+    } catch (error) {
+      // If file not found, return default
+      if (error instanceof Error &amp;&amp; error.message.includes('not found')) {
+        return DEFAULT_CONFIG;
+      }
+      // Re-throw other errors (invalid JSON, validation, etc.)
+      throw error;
     }
-&nbsp;
-    // Add export keyword (optional)
-    const exportKeyword = this.options.exportInterfaces ? 'export ' : '';
-&nbsp;
-    // Interface declaration
-    lines.push(`${exportKeyword}interface ${parsedClass.name} {`);
-&nbsp;
-    // Add properties
-    if (parsedClass.properties.length === 0) {
-      // Empty interface (edge case)
-      lines.push(`${this.options.indentation}// No properties`);
-    } else {
-      parsedClass.properties.forEach((property) =&gt; {
-        // Map C# type to TypeScript type
-        const tsType = this.typeMapper.map(property.type ?? 'any');
-&nbsp;
-        // Add property line
-        lines.push(`${this.options.indentation}${property.name}: ${tsType};`);
-      });
-    }
-&nbsp;
-    // Close interface
-    lines.push('}');
-&nbsp;
-    // Join all lines with newlines
-    return lines.join('\n');
-  }
-&nbsp;
-  /**
-   * Generates TypeScript interfaces for multiple parsed classes
-   * @param parsedClasses - Array of parsed C# classes
-   * @returns TypeScript code as a string
-   */
-  generateMultiple(parsedClasses: ParsedClass[]): string {
-    const interfaces = parsedClasses.map((parsedClass) =&gt;
-      this.generate(parsedClass),
-    );
-&nbsp;
-    // Join with double newline separator
-    return interfaces.join('\n\n');
   }
 }
 &nbsp;</pre></td></tr></table></pre>
