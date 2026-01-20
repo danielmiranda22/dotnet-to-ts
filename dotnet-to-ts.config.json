@@ -1,0 +1,9 @@
+{
+  "input": ["tests/fixtures/**/*.cs"],
+  "output": "output/generated.ts",
+  "options": {
+    "indentation": "  ",
+    "addTimestamp": true,
+    "exportInterfaces": true
+  }
+}
