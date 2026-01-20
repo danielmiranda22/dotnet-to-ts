@@ -45,8 +45,13 @@ export class CSharpParser {
     // \s+                    - whitespace
     // (\w+)                  - capture group 2: property name
     // \s*\{\s*get;\s*set;\s*\}  - property getter/setter syntax
+    // OLD (broken):
+    // const propertyRegex =
+    // /public\s+(\w+(? :<\w+>)?\??)\s+(\w+)\s*\{\s*get;\s*set;\s*\}/g
+
+    // NEW (works width <List<string?>> the other one when nullable generic types it fails):
     const propertyRegex =
-      /public\s+(\w+(?:<\w+>)?\??)\s+(\w+)\s*\{\s*get;\s*set;\s*\}/g;
+      /public\s+(\w+(?:<[^>]+>)?\??)\s+(\w+)\s*\{\s*get;\s*set;\s*\}/g;
 
     let match;
     while ((match = propertyRegex.exec(csharpCode)) !== null) {
