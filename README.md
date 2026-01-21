@@ -16,7 +16,7 @@ Designed to eliminate manual syncing, speed up full-stack development, and suppo
 1. **Clone and build:**
 
    ```bash
-   git clone https://github.com/YOUR_USERNAME/dotnet-to-ts.git
+   git clone https://github.com/danielmiranda22/dotnet-to-ts.git
    cd dotnet-to-ts
    npm install
    npm run build
@@ -190,7 +190,7 @@ Reference **multiple locations**—inside or outside your project:
 
 - All `"input"` patterns are resolved _relative to your config file_.
 - Use globs for entire folders, or direct paths to individual files.
-- Supports referencing shared DTOs, enums, or base classes from anywhere in your solution.
+- Supports referencing shared DTOs, enums (not yet supported), or base classes from anywhere in your solution.
 
 **Generate and review:**
 
