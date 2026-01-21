@@ -1,3 +1,8 @@
 node_modules
 dist
 .env
+# Ignore generated TypeScript types
+output/
+*.generated.ts
+# Or for your demo:
+examples/demo-app/output/

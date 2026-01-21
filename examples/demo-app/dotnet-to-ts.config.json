@@ -1,0 +1,9 @@
+{
+  "input": ["Models/**/*.cs", "ViewModels/**/*.cs"],
+  "output": "output/generated.ts",
+  "options": {
+    "identation": "  ",
+    "addTimestamp": true,
+    "exportInterfaces": true
+  }
+}
