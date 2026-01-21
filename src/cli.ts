@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { DEFAULT_CONFIG } from './config/Config';
 import { ConfigLoader } from './config/ConfigLoader';
 import { FileSystem } from './utils/FileSystem';
 import { CSharpParser } from './parser/CSharpParser';
@@ -10,11 +11,34 @@ import * as fs from 'fs';
 async function main() {
   console.log('🔷 dotnet-to-ts - TypeScript generator for C# DTOs 🔷');
 
-  // 1. Load config
-  const configPath = process.argv[2] || 'dotnet-to-ts.config.json';
+  const [, , arg1] = process.argv;
+
+  // -- Step 1: INIT Command
+  if (arg1 === 'init') {
+    const configPath = 'dotnet-to-ts.config.json';
+    if (fs.existsSync(configPath)) {
+      console.error(`⚠️  Config file already exists at: ${configPath}`);
+      process.exit(1);
+    }
+    fs.writeFileSync(configPath, JSON.stringify(DEFAULT_CONFIG, null, 2));
+    console.log('✅ Created dotnet-to-ts.config.json with default settings.');
+    process.exit(0);
+  }
+
+  // -- Step 2: Config discovery
+  // Accepts: dotnet-to-ts [configPath] or dotnet-to-ts generate:ts [configPath]
+  let configPath: string | undefined;
+  if (arg1 === 'generate' || arg1 === 'generate:ts' || !arg1) {
+    // "dotnet-to-ts", "dotnet-to-ts generate", or "dotnet-to-ts generate:ts"
+    configPath = process.argv[3] || 'dotnet-to-ts.config.json';
+  } else {
+    // Allow direct path as first argument
+    configPath = arg1;
+  }
+
+  // -- Step 3: Load config
   const configLoader = new ConfigLoader();
   let config;
-
   try {
     config = configLoader.load(configPath);
     console.log(`📄 Loaded config: ${configPath}`);
@@ -23,7 +47,7 @@ async function main() {
     process.exit(1);
   }
 
-  // 2. Scan for C# files
+  // -- Step 4: Scan for C# files
   const fileSystem = new FileSystem();
   console.log('🔎 Scanning for C# files...');
   const files = await fileSystem.scan(config.input);
@@ -33,10 +57,8 @@ async function main() {
   }
   console.log(`✅ Found ${files.length} C# files.`);
 
-  // 3. Read all files
+  // -- Step 5: Read and parse files
   const results = fileSystem.readMultiple(files);
-
-  // 4. Parse classes
   const parser = new CSharpParser();
   const parsed = results
     .map((res) => parser.parse(res.content))
@@ -46,17 +68,17 @@ async function main() {
     console.error('❌ No parsable classes found in C# files.');
     process.exit(1);
   }
-  console.log(`��� Parsed ${parsed.length} classes.`);
+  console.log(`✅ Parsed ${parsed.length} classes.`);
 
-  // 5. Generate TypeScript
+  // -- Step 6: Generate TypeScript
   const generator = new TypeScriptGenerator(config.options as any);
   const tsCode = generator.generateMultiple(parsed as any[]);
 
-  // 6. Write to output file
+  // -- Step 7: Write output
   fileSystem.write(config.output, tsCode);
   console.log(`✅ Written TypeScript interfaces to: ${config.output}`);
 
-  // 7. Done
+  // -- Step 8: Done
   console.log('🎉 Done!');
 }
 

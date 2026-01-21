@@ -1,6 +1,8 @@
 {
-  "input": ["tests/fixtures/**/*.cs"],
-  "output": "output/generated.ts",
+  "input": [
+    "**/*.cs"
+  ],
+  "output": "generated.ts",
   "options": {
     "indentation": "  ",
     "addTimestamp": true,
