@@ -11,7 +11,8 @@
     "dev": "tsc --watch",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "generate:ts": "node dist/cli.js"
   },
   "keywords": [],
   "author": "",
