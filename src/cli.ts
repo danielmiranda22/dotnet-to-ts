@@ -5,34 +5,39 @@ import { ConfigLoader } from './config/ConfigLoader';
 import { FileSystem } from './utils/FileSystem';
 import { CSharpParser } from './parser/CSharpParser';
 import { TypeScriptGenerator } from './generator/TypeScriptGenerator';
-import * as path from 'path';
+import { Logger } from './utils/Logger';
 import * as fs from 'fs';
 
 async function main() {
-  console.log('🔷 dotnet-to-ts - TypeScript generator for C# DTOs 🔷');
+  const args = process.argv.slice(2);
+  const isVerbose = args.includes('--verbose');
+  const commandArgs = args.filter((arg) => !arg.startsWith('--'));
+  const [arg1, arg2] = commandArgs;
 
-  const [, , arg1] = process.argv;
+  Logger.info('dotnet-to-ts - TypeScript generator for C# DTOs');
 
-  // -- Step 1: INIT Command
+  // -- Step 1: INIT
   if (arg1 === 'init') {
     const configPath = 'dotnet-to-ts.config.json';
     if (fs.existsSync(configPath)) {
-      console.error(`⚠️  Config file already exists at: ${configPath}`);
+      Logger.warn(`Config file already exists at: ${configPath}`);
       process.exit(1);
     }
     fs.writeFileSync(configPath, JSON.stringify(DEFAULT_CONFIG, null, 2));
-    console.log('✅ Created dotnet-to-ts.config.json with default settings.');
+    Logger.success('Created dotnet-to-ts.config.json with default settings.');
     process.exit(0);
   }
 
   // -- Step 2: Config discovery
-  // Accepts: dotnet-to-ts [configPath] or dotnet-to-ts generate:ts [configPath]
-  let configPath: string | undefined;
-  if (arg1 === 'generate' || arg1 === 'generate:ts' || !arg1) {
-    // "dotnet-to-ts", "dotnet-to-ts generate", or "dotnet-to-ts generate:ts"
-    configPath = process.argv[3] || 'dotnet-to-ts.config.json';
+  let configPath: string;
+  if (
+    arg1 === 'generate' ||
+    arg1 === 'generate:ts' ||
+    !arg1 ||
+    (arg1 && arg1.endsWith('.json'))
+  ) {
+    configPath = arg2 || 'dotnet-to-ts.config.json';
   } else {
-    // Allow direct path as first argument
     configPath = arg1;
   }
 
@@ -41,48 +46,83 @@ async function main() {
   let config;
   try {
     config = configLoader.load(configPath);
-    console.log(`📄 Loaded config: ${configPath}`);
+    Logger.step(`Loaded config: ${configPath}`);
+    Logger.debug(JSON.stringify(config, null, 2), isVerbose);
   } catch (err) {
-    console.error(`❌ Failed to load config: ${(err as Error).message}`);
+    Logger.error(`Failed to load config: ${(err as Error).message}`);
+    Logger.info('Hint: Did you forget a comma or quote in your config file?');
     process.exit(1);
   }
 
   // -- Step 4: Scan for C# files
+  Logger.step('Scanning for C# files...');
+  console.time('Scan');
   const fileSystem = new FileSystem();
-  console.log('🔎 Scanning for C# files...');
-  const files = await fileSystem.scan(config.input);
-  if (files.length === 0) {
-    console.error('❌ No C# files found with specified input patterns.');
+  let files: string[] = [];
+  try {
+    files = await fileSystem.scan(config.input);
+  } catch (scanErr) {
+    Logger.error('Error scanning files: ' + (scanErr as Error).message);
     process.exit(1);
   }
-  console.log(`✅ Found ${files.length} C# files.`);
+  console.timeEnd('Scan');
+  Logger.debug('C# files:\n' + files.join('\n'), isVerbose);
+
+  if (files.length === 0) {
+    Logger.error('No C# files found with specified input patterns.');
+    Logger.info(
+      'Hint: Check your `input` globs and run from your solution root, e.g. "Models/**/*.cs"',
+    );
+    process.exit(1);
+  }
+  Logger.success(`Found ${files.length} C# files.`);
 
   // -- Step 5: Read and parse files
+  Logger.step('Parsing files...');
+  console.time('Parse');
   const results = fileSystem.readMultiple(files);
   const parser = new CSharpParser();
   const parsed = results
     .map((res) => parser.parse(res.content))
     .filter((cls) => cls !== null);
+  console.timeEnd('Parse');
+
+  Logger.debug(
+    'Parsed class structures:\n' + JSON.stringify(parsed, null, 2),
+    isVerbose,
+  );
 
   if (parsed.length === 0) {
-    console.error('❌ No parsable classes found in C# files.');
+    Logger.error('No parsable classes found in C# files.');
+    Logger.info(
+      'Hint: Only public classes with standard properties are supported.',
+    );
     process.exit(1);
   }
-  console.log(`✅ Parsed ${parsed.length} classes.`);
+  Logger.success(`Parsed ${parsed.length} classes.`);
 
   // -- Step 6: Generate TypeScript
+  Logger.step('Generating TypeScript...');
+  console.time('Generate');
   const generator = new TypeScriptGenerator(config.options as any);
   const tsCode = generator.generateMultiple(parsed as any[]);
+  console.timeEnd('Generate');
 
   // -- Step 7: Write output
-  fileSystem.write(config.output, tsCode);
-  console.log(`✅ Written TypeScript interfaces to: ${config.output}`);
+  Logger.step(`Writing TypeScript interfaces to: ${config.output}`);
+  try {
+    fileSystem.write(config.output, tsCode);
+  } catch (writeErr) {
+    Logger.error('Failed to write output: ' + (writeErr as Error).message);
+    process.exit(1);
+  }
+  Logger.success(`Written TypeScript interfaces to: ${config.output}`);
 
   // -- Step 8: Done
-  console.log('🎉 Done!');
+  Logger.success('Done!');
 }
 
 main().catch((err) => {
-  console.error('❌ Unexpected error:', err);
+  Logger.error('Unexpected error: ' + (err as Error).message);
   process.exit(1);
 });

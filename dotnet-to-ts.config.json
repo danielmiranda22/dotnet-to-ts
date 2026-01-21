@@ -1,0 +1,11 @@
+{
+  "input": [
+    "**/*.cs"
+  ],
+  "output": "generated.ts",
+  "options": {
+    "indentation": "  ",
+    "addTimestamp": true,
+    "exportInterfaces": true
+  }
+}

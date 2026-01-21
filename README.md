@@ -81,10 +81,10 @@ public class ComplexViewModel
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    pbblic int? IdDepartment { get; set; }
+    public int? IdDepartment { get; set; }
     public List<SimpleViewModel> Items { get; set; }
     public List<string> Roles { get; set; }
-    pubblic Datetime CreatedAt { get; set;
+    public DateTime CreatedAt { get; set; }
 }
 ```
 
@@ -112,6 +112,17 @@ export interface ComplexViewModel {
   Roles: string[];
   CreatedAt: string;
 }
+```
+
+### 🐛 Debugging with `--verbose`
+
+Add the `--verbose` flag to any command for extra log output!  
+This will print the loaded config, matched files, and parsing details.
+
+```bash
+dotnet-to-ts generate --verbose
+# or
+node dist/cli.js generate --verbose
 ```
 
 ---

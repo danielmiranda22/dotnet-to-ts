@@ -2,6 +2,7 @@ node_modules
 dist
 .env
 # Ignore generated TypeScript types
+generated.ts
 output/
 *.generated.ts
 # Or for your demo:
