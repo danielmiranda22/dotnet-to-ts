@@ -125,4 +125,28 @@ describe('CLI Tool', () => {
     expect(fs.existsSync(outputPath)).toBe(true);
     fs.unlinkSync(tempConfig);
   });
+
+  it('should create default config with the init command', () => {
+    const cliBin = path.join(__dirname, '..', 'dist', 'cli.js');
+    const tempConfig = path.join(__dirname, '..', 'dotnet-to-ts.config.json');
+
+    // Cleanup config if present
+    if (fs.existsSync(tempConfig)) fs.unlinkSync(tempConfig);
+
+    // Act
+    const result = spawnSync('node', [cliBin, 'init'], { encoding: 'utf-8' });
+
+    // Assert
+    expect(result.status).toBe(0);
+    expect(result.stdout).toMatch(/Created dotnet-to-ts\.config\.json/);
+    expect(fs.existsSync(tempConfig)).toBe(true);
+
+    // Config should match the project's DEFAULT_CONFIG keys
+    const config = JSON.parse(fs.readFileSync(tempConfig, 'utf-8'));
+    expect(config).toHaveProperty('input');
+    expect(config).toHaveProperty('output');
+
+    // Cleanup after test
+    if (fs.existsSync(tempConfig)) fs.unlinkSync(tempConfig);
+  });
 });
