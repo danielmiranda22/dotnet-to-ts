@@ -1,5 +1,9 @@
 {
-  "input": ["Models/**/*.cs", "ViewModels/**/*.cs"],
+  "input": [
+    "Models/**/*.cs",
+    "ViewModels/**/*.cs",
+    "../class-library/SimpleClass.cs"
+  ],
   "output": "output/generated.ts",
   "options": {
     "identation": "  ",

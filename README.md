@@ -7,7 +7,7 @@
 ## 🚀 What is this?
 
 A CLI tool to automate generating TypeScript types from C# source files.  
-Designed for my personal and work projects, to avoid manually syncing types and to accelerate full-stack development.
+Designed to eliminate manual syncing, speed up full-stack development, and support real C#/TS projects—personal or professional.
 
 ---
 
@@ -26,12 +26,12 @@ Designed for my personal and work projects, to avoid manually syncing types and 
 
    ```bash
    cd examples/demo-app
-   node ../../dist/cli.js init           # Creates a config file if needed
-   node ../../dist/cli.js generate       # Or just: node ../../dist/cli.js
+   node ../../dist/cli.js init         # Creates a config file if needed
+   node ../../dist/cli.js generate     # Generates all TypeScript interfaces
    ```
 
 3. **Review output:**  
-   Open `output/generated.ts` – you’ll see TypeScript interfaces for all discovered C# classes.
+   Open `output/generated.ts` to find TypeScript interfaces for all discovered C# classes and all referenced types (as long as their `.cs` files are included in your input config).
 
 ---
 
@@ -52,23 +52,28 @@ Creates a starter `dotnet-to-ts.config.json`.
 ### 2️⃣ Generate TypeScript interfaces
 
 ```bash
-dotnet-to-ts generate
-dotnet-to-ts generate:ts
-dotnet-to-ts
-# Or if local:
-node dist/cli.js generate
-node dist/cli.js generate:ts
-node dist/cli.js
+dotnet-to-ts generate        # Global CLI
+# or
+node dist/cli.js generate    # Local usage
 ```
 
 - Parses all matches from your `input` config.
 - Outputs the result at the specified `output` path.
 
+> **Tip:**  
+> Add `--verbose` for detailed logs (matched files, config info, parsing details):
+
+```bash
+dotnet-to-ts generate --verbose
+# or
+node dist/cli.js generate --verbose
+```
+
 ---
 
 ## 🧑‍💻 Example
 
-**Given these C# files (see [`examples/demo-app`](examples/demo-app/)):**
+Suppose you have these C# files in [`examples/demo-app`](examples/demo-app/):
 
 ```csharp
 public class DepartmentDto
@@ -88,15 +93,14 @@ public class ComplexViewModel
 }
 ```
 
-**CLI usage:**
+**Generate with:**
 
 ```bash
 cd examples/demo-app
-node ../../dist/cli.js init        # Once only, if no config yet
-node ../../dist/cli.js             # Or node ../../dist/cli.js generate
+node ../../dist/cli.js generate
 ```
 
-**Generates `output/generated.ts`:**
+**Produces `output/generated.ts`:**
 
 ```typescript
 export interface DepartmentDto {
@@ -114,16 +118,7 @@ export interface ComplexViewModel {
 }
 ```
 
-### 🐛 Debugging with `--verbose`
-
-Add the `--verbose` flag to any command for extra log output!  
-This will print the loaded config, matched files, and parsing details.
-
-```bash
-dotnet-to-ts generate --verbose
-# or
-node dist/cli.js generate --verbose
-```
+Referenced types (like `DepartmentDto` in other models/DTOs) are included so long as their `.cs` files appear in `"input"`.
 
 ---
 
@@ -145,47 +140,91 @@ The CLI reads `dotnet-to-ts.config.json` in your project root.
 }
 ```
 
-- **input:** One or more glob patterns for `.cs` files.
+- **input:** One or more glob patterns or file paths for `.cs` files, supporting both relative paths and globs.
 - **output:** Path for the generated TypeScript file.
-- **options:** Formatting and generation options.
+- **options:** Formatting and generation settings.
 
 ---
 
 ## 📁 Demo Project
 
-For a working example, try the built-in demo app:
+For a working example, try the built-in demo app!
+
+### Structure
 
 ```
-examples/demo-app/
-├── Models/
-├── ViewModels/
-└── dotnet-to-ts.config.json
+examples/
+  class-library/
+    SimpleClass.cs
+  demo-app/
+    Models/
+      DepartmentDto.cs
+      SimpleDto.cs
+    ViewModels/
+      ComplexViewModel.cs
+      SimpleViewModel.cs
+    dotnet-to-ts.config.json
 ```
 
-- Populate C# files in `Models` and `ViewModels`
-- Generate types with the CLI
-- Find output in `output/generated.ts`
+### Sample config
+
+Reference **multiple locations**—inside or outside your project:
+
+```json
+{
+  "input": [
+    "Models/**/*.cs",
+    "ViewModels/**/*.cs",
+    "../class-library/SimpleClass.cs"
+  ],
+  "output": "output/generated.ts",
+  "options": {
+    "indentation": "  ",
+    "addTimestamp": true,
+    "exportInterfaces": true
+  }
+}
+```
+
+**Key points:**
+
+- All `"input"` patterns are resolved _relative to your config file_.
+- Use globs for entire folders, or direct paths to individual files.
+- Supports referencing shared DTOs, enums, or base classes from anywhere in your solution.
+
+**Generate and review:**
+
+```bash
+node ../../dist/cli.js generate
+# or, after a global install:
+dotnet-to-ts generate
+```
+
+Check `output/generated.ts` for all your TypeScript interfaces—including from cross-library or shared C# sources!
+
+> **Tip:**  
+> Add new DTOs or enums?  
+> Just update the `"input"` list and re-run—dependencies will be included.
 
 ---
 
 ## ❗ Limitations
 
 - ✅ **Supported:** Public C# classes, nested properties, lists, nullables, references by type.
-- ❌ **Not supported:** Inheritance, enums, dictionaries/maps, non-public/internal/private members, C# attributes, or methods.
-- 🚧 **No `--verbose` CLI yet** (planned).
-- ✨ Well-tested internally, but focused on my own use cases and needs.
+- ❌ **Not supported:** Inheritance, enums (C# enums are not yet output as TypeScript enums), dictionaries/maps, non-public/internal/private members, C# attributes, or methods.
+- ✨ Well-tested for internal use, focused on my own cases and needs.
 
 ---
 
 ## 🐛 Troubleshooting
 
 - **No files found:**  
-  Check `input` glob patterns (e.g. `"Models/**/*.cs"`) and run CLI from the correct directory.
+  Check `input` globs/file paths, and run the CLI from the correct directory.
 - **Malformed config:**  
-  Edit your JSON carefully and remove trailing commas.
+  Double-check your config for valid JSON, without trailing commas.
 - **Output not as expected:**  
-  Double-check C# class design (see limitations), open your generated TypeScript to debug.
-- **Want to avoid committing generated files?**  
+  Review your C# models/DTOs (see limitations) and examine generated TypeScript for clues.
+- **Avoid committing generated files:**  
   Add this to your `.gitignore`:
 
   ```
@@ -197,9 +236,8 @@ examples/demo-app/
 
 ## 👤 About
 
-I built this CLI for my own workflow and to make my .NET + TypeScript integration smoother.  
-Feel free to use, fork, or adapt for your projects.  
-Ideas or feedback? Open an issue or reach out!
+I built this CLI to make my .NET + TypeScript integration easier and less error-prone.  
+Feel free to use, fork, or adapt for your projects.
 
 ---
 
