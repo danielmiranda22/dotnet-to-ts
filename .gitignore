@@ -1,9 +1,17 @@
-node_modules
-dist
+# Node/NPM
+node_modules/
 .env
+
+# Build output
+dist/
+
+# Coverage reports
+coverage/
+
 # Ignore generated TypeScript types
 generated.ts
-output/
 *.generated.ts
-# Or for your demo:
+output/
+
+# Ignore example/demo generated output
 examples/demo-app/output/
