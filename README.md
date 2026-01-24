@@ -8,9 +8,11 @@
 
 ## Why I Built This
 
-At my company, we're planning to move from .NET MVC + JavaScript to .NET MVC + TypeScript. I got tired of manually copying C# DTOs to TypeScript and keeping them in sync. So I built this tool to automate it.
+I work with .NET MVC and wanted to learn TypeScript properly. So, I decided to build something practical: a tool that generates TypeScript interfaces from C# classes.
 
-What started as a personal utility turned into a properly tested CLI tool (100+ tests) that handles complex scenarios like arrays, nullables, and cross-file references.
+The idea is simple - if I ever need to integrate TypeScript with a .NET backend (whether at my current company or elsewhere), I'll have a tool ready that keeps types in sync automatically. No manual copying, no drift between frontend and backend.
+
+What started as a learning project turned into a properly tested CLI tool (100+ tests) that handles real scenarios like nullables, collections, and cross-file references.
 
 If you're working with .NET + TypeScript, this might help you too.
 
