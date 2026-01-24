@@ -1,12 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { TypeScriptGenerator } from '../src/generator/TypeScriptGenerator.js';
+import { TSGenerator } from '../src/generator/TSGenerator.js';
 import { ParsedClass } from '../src/parser/CSharpParser.js';
 
-describe('TypeScriptGenerator', () => {
-  let generator: TypeScriptGenerator;
-
+describe('TSGenerator', () => {
+  let generator: TSGenerator;
   beforeEach(() => {
-    generator = new TypeScriptGenerator();
+    generator = new TSGenerator();
   });
 
   describe('Basic interface generation', () => {
@@ -147,7 +146,7 @@ describe('TypeScriptGenerator', () => {
     });
 
     it('should omit export keyword when exportInterfaces is false', () => {
-      const gen = new TypeScriptGenerator({ exportInterfaces: false });
+      const gen = new TSGenerator({ exportInterfaces: false });
       const parsed: ParsedClass = {
         name: 'UserDto',
         properties: [{ name: 'Id', type: 'int' }],
@@ -175,7 +174,7 @@ describe('TypeScriptGenerator', () => {
     });
 
     it('should omit timestamp when addTimestamp is false', () => {
-      const gen = new TypeScriptGenerator({ addTimestamp: false });
+      const gen = new TSGenerator({ addTimestamp: false });
       const parsed: ParsedClass = {
         name: 'UserDto',
         properties: [{ name: 'Id', type: 'int' }],
@@ -202,7 +201,7 @@ describe('TypeScriptGenerator', () => {
     });
 
     it('should use 4 spaces when specified', () => {
-      const gen = new TypeScriptGenerator({ indentation: '    ' });
+      const gen = new TSGenerator({ indentation: '    ' });
       const parsed: ParsedClass = {
         name: 'UserDto',
         properties: [{ name: 'Id', type: 'int' }],
@@ -214,7 +213,7 @@ describe('TypeScriptGenerator', () => {
     });
 
     it('should use tabs when specified', () => {
-      const gen = new TypeScriptGenerator({ indentation: '\t' });
+      const gen = new TSGenerator({ indentation: '\t' });
       const parsed: ParsedClass = {
         name: 'UserDto',
         properties: [{ name: 'Id', type: 'int' }],

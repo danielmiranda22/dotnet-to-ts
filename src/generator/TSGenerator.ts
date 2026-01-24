@@ -11,7 +11,7 @@ export interface GeneratorOptions {
   exportInterfaces?: boolean; // Add "export" keyword
 }
 
-export class TypeScriptGenerator {
+export class TSGenerator {
   private typeMapper: TypeMapper;
   private options: Required<GeneratorOptions>;
 

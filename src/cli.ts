@@ -4,7 +4,7 @@ import { DEFAULT_CONFIG } from './config/Config.js';
 import { ConfigLoader } from './config/ConfigLoader.js';
 import { FileSystem } from './utils/FileSystem.js';
 import { CSharpParser } from './parser/CSharpParser.js';
-import { TypeScriptGenerator } from './generator/TypeScriptGenerator.js';
+import { TSGenerator } from './generator/TSGenerator.js';
 import { Logger } from './utils/Logger.js';
 import * as fs from 'fs';
 
@@ -104,7 +104,7 @@ async function main() {
   // -- Step 6: Generate TypeScript
   Logger.step('Generating TypeScript...');
   console.time('Generate');
-  const generator = new TypeScriptGenerator(config.options as any);
+  const generator = new TSGenerator(config.options as any);
   const tsCode = generator.generateMultiple(parsed as any[]);
   console.timeEnd('Generate');
 

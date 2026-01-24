@@ -1,17 +1,17 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { CSharpParser } from '../src/parser/CSharpParser.js';
-import { TypeScriptGenerator } from '../src/generator/TypeScriptGenerator.js';
+import { TSGenerator } from '../src/generator/TSGenerator.js';
 import * as fs from 'fs';
 import * as path from 'path';
 
 describe('Integration:  Parser → Generator Pipeline', () => {
   describe('End-to-end workflow', () => {
     let parser: CSharpParser;
-    let generator: TypeScriptGenerator;
+    let generator: TSGenerator;
 
     beforeEach(() => {
       parser = new CSharpParser();
-      generator = new TypeScriptGenerator({ addTimestamp: false });
+      generator = new TSGenerator({ addTimestamp: false });
     });
 
     it('should convert simple DTO from C# to TypeScript', () => {
@@ -127,11 +127,11 @@ describe('Integration:  Parser → Generator Pipeline', () => {
 
   describe('Real fixture files', () => {
     let parser: CSharpParser;
-    let generator: TypeScriptGenerator;
+    let generator: TSGenerator;
 
     beforeEach(() => {
       parser = new CSharpParser();
-      generator = new TypeScriptGenerator({ addTimestamp: false });
+      generator = new TSGenerator({ addTimestamp: false });
     });
 
     it('should convert EmployeeDto.cs to TypeScript', () => {
@@ -225,7 +225,7 @@ describe('Integration:  Parser → Generator Pipeline', () => {
     it('should generate multiple interfaces from multiple C# classes', () => {
       // Arrange
       const parser = new CSharpParser();
-      const generator = new TypeScriptGenerator({ addTimestamp: false });
+      const generator = new TSGenerator({ addTimestamp: false });
 
       const userCode = `
         public class UserDto {
@@ -268,7 +268,7 @@ describe('Integration:  Parser → Generator Pipeline', () => {
     it('should generate all fixture files together', () => {
       // Arrange
       const parser = new CSharpParser();
-      const generator = new TypeScriptGenerator({ addTimestamp: false });
+      const generator = new TSGenerator({ addTimestamp: false });
 
       const files = ['EmployeeDto.cs', 'DepartmentDto.cs', 'EntityDto.cs'];
 
@@ -298,8 +298,8 @@ describe('Integration:  Parser → Generator Pipeline', () => {
     it('should respect timestamp option', () => {
       // Arrange
       const parser = new CSharpParser();
-      const genWithTimestamp = new TypeScriptGenerator({ addTimestamp: true });
-      const genWithoutTimestamp = new TypeScriptGenerator({
+      const genWithTimestamp = new TSGenerator({ addTimestamp: true });
+      const genWithoutTimestamp = new TSGenerator({
         addTimestamp: false,
       });
 
@@ -325,8 +325,8 @@ describe('Integration:  Parser → Generator Pipeline', () => {
     it('should respect export option', () => {
       // Arrange
       const parser = new CSharpParser();
-      const genWithExport = new TypeScriptGenerator({ exportInterfaces: true });
-      const genWithoutExport = new TypeScriptGenerator({
+      const genWithExport = new TSGenerator({ exportInterfaces: true });
+      const genWithoutExport = new TSGenerator({
         exportInterfaces: false,
       });
 
@@ -350,11 +350,11 @@ describe('Integration:  Parser → Generator Pipeline', () => {
     it('should respect indentation option', () => {
       // Arrange
       const parser = new CSharpParser();
-      const gen2Spaces = new TypeScriptGenerator({
+      const gen2Spaces = new TSGenerator({
         indentation: '  ',
         addTimestamp: false,
       });
-      const gen4Spaces = new TypeScriptGenerator({
+      const gen4Spaces = new TSGenerator({
         indentation: '    ',
         addTimestamp: false,
       });
