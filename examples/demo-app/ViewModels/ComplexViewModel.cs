@@ -8,4 +8,5 @@ public class ComplexViewModel
   public List<SimpleViewModel> Items { get; set; }
   public List<string> Roles { get; set; }
   public DateTime CreatedAt { get; set; }
+  public Dictionary<int, string> Pairs { get; set; }
 }

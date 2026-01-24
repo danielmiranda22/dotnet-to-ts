@@ -1,247 +1,383 @@
 # dotnet-to-ts
 
-> **Generate TypeScript interfaces from your C# models, DTOs, and view models for a smoother .NET + TypeScript workflow.**
+> **Automatically generate TypeScript interfaces from C# classes—no more manual type syncing.**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
-## 🚀 What is this?
+## Why I Built This
 
-A CLI tool to automate generating TypeScript types from C# source files.  
-Designed to eliminate manual syncing, speed up full-stack development, and support real C#/TS projects—personal or professional.
+At my company, we're planning to move from .NET MVC + JavaScript to .NET MVC + TypeScript. I got tired of manually copying C# DTOs to TypeScript and keeping them in sync. So I built this tool to automate it.
 
----
+What started as a personal utility turned into a properly tested CLI tool (100+ tests) that handles complex scenarios like arrays, nullables, and cross-file references.
 
-## 🏁 Quick Start
-
-1. **Clone and build:**
-
-   ```bash
-   git clone https://github.com/danielmiranda22/dotnet-to-ts.git
-   cd dotnet-to-ts
-   npm install
-   npm run build
-   ```
-
-2. **Try out the demo app:**
-
-   ```bash
-   cd examples/demo-app
-   node ../../dist/cli.js init         # Creates a config file if needed
-   node ../../dist/cli.js generate     # Generates all TypeScript interfaces
-   ```
-
-3. **Review output:**  
-   Open `output/generated.ts` to find TypeScript interfaces for all discovered C# classes and all referenced types (as long as their `.cs` files are included in your input config).
+If you're working with .NET + TypeScript, this might help you too.
 
 ---
 
-## 🚦 CLI Usage
+## 📦 Installation
 
-### 1️⃣ Initialize Config
+```bash
+# Coming soon to npm:
+npm install -g dotnet-to-ts
+
+# For now, install from source:
+git clone https://github.com/danielmiranda22/dotnet-to-ts.git
+cd dotnet-to-ts
+npm install
+npm run build
+npm install -g .
+```
+
+---
+
+## 🚀 Quick Start
+
+### 1. Initialize configuration
 
 ```bash
 dotnet-to-ts init
-# or, if using local build:
-node dist/cli.js init
 ```
 
-Creates a starter `dotnet-to-ts.config.json`.
+This creates `dotnet-to-ts.config.json`:
+
+```json
+{
+  "input": ["Models/**/*.cs", "ViewModels/**/*.cs"],
+  "output": "generated/types.ts",
+  "options": {
+    "indentation": "  ",
+    "addTimestamp": true,
+    "exportInterfaces": true
+  }
+}
+```
+
+### 2. Generate TypeScript interfaces
+
+```bash
+dotnet-to-ts generate
+```
+
+That's it! Your TypeScript interfaces are ready.
 
 ---
 
-### 2️⃣ Generate TypeScript interfaces
+## 💡 Example
 
-```bash
-dotnet-to-ts generate        # Global CLI
-# or
-node dist/cli.js generate    # Local usage
-```
-
-- Parses all matches from your `input` config.
-- Outputs the result at the specified `output` path.
-
-> **Tip:**  
-> Add `--verbose` for detailed logs (matched files, config info, parsing details):
-
-```bash
-dotnet-to-ts generate --verbose
-# or
-node dist/cli.js generate --verbose
-```
-
----
-
-## 🧑‍💻 Example
-
-Suppose you have these C# files in [`examples/demo-app`](examples/demo-app/):
+**C# Input:**
 
 ```csharp
-public class DepartmentDto
-{
-    public int Id { get; set; }
-    public string? Description { get; set; }
-}
-
-public class ComplexViewModel
+// Models/User.cs
+public class UserDto
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public int? IdDepartment { get; set; }
-    public List<SimpleViewModel> Items { get; set; }
+    public string? Email { get; set; }
     public List<string> Roles { get; set; }
     public DateTime CreatedAt { get; set; }
 }
+
+// Models/Department.cs
+public class DepartmentDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public List<UserDto> Members { get; set; }
+}
 ```
 
-**Generate with:**
-
-```bash
-cd examples/demo-app
-node ../../dist/cli.js generate
-```
-
-**Produces `output/generated.ts`:**
+**Generated TypeScript:**
 
 ```typescript
-export interface DepartmentDto {
-  Id: number;
-  Description: string | null;
-}
-
-export interface ComplexViewModel {
+// generated/types.ts
+export interface UserDto {
   Id: number;
   Name: string;
-  IdDepartment: number | null;
-  Items: SimpleViewModel[];
+  Email: string | null;
   Roles: string[];
   CreatedAt: string;
 }
+
+export interface DepartmentDto {
+  Id: number;
+  Name: string;
+  Members: UserDto[];
+}
 ```
 
-Referenced types (like `DepartmentDto` in other models/DTOs) are included so long as their `.cs` files appear in `"input"`.
+**Key features:**
+
+- ✅ Nullable types → `string | null`
+- ✅ Generic collections → `UserDto[]`
+- ✅ DateTime → `string` (JSON serialization)
+- ✅ Referenced types automatically included
 
 ---
 
 ## ⚙️ Configuration
 
-The CLI reads `dotnet-to-ts.config.json` in your project root.
+### Input Patterns
 
-**Example:**
-
-```json
-{
-  "input": ["Models/**/*.cs", "ViewModels/**/*.cs"],
-  "output": "output/generated.ts",
-  "options": {
-    "indentation": "  ",
-    "addTimestamp": true,
-    "exportInterfaces": true
-  }
-}
-```
-
-- **input:** One or more glob patterns or file paths for `.cs` files, supporting both relative paths and globs.
-- **output:** Path for the generated TypeScript file.
-- **options:** Formatting and generation settings.
-
----
-
-## 📁 Demo Project
-
-For a working example, try the built-in demo app!
-
-### Structure
-
-```
-examples/
-  class-library/
-    SimpleClass.cs
-  demo-app/
-    Models/
-      DepartmentDto.cs
-      SimpleDto.cs
-    ViewModels/
-      ComplexViewModel.cs
-      SimpleViewModel.cs
-    dotnet-to-ts.config.json
-```
-
-### Sample config
-
-Reference **multiple locations**—inside or outside your project:
+Supports glob patterns and direct file paths:
 
 ```json
 {
   "input": [
-    "Models/**/*.cs",
-    "ViewModels/**/*.cs",
-    "../class-library/SimpleClass.cs"
-  ],
-  "output": "output/generated.ts",
+    "Models/**/*.cs", // All .cs files in Models/
+    "ViewModels/**/*.cs", // All .cs files in ViewModels/
+    "../Shared/Dtos/Common.cs" // Specific file (relative path)
+  ]
+}
+```
+
+All paths are resolved **relative to your config file**.
+
+### Options
+
+```json
+{
   "options": {
-    "indentation": "  ",
-    "addTimestamp": true,
-    "exportInterfaces": true
+    "indentation": "  ", // Use spaces or tabs
+    "addTimestamp": true, // Add generation timestamp
+    "exportInterfaces": true // Export all interfaces
   }
 }
 ```
 
-**Key points:**
+---
 
-- All `"input"` patterns are resolved _relative to your config file_.
-- Use globs for entire folders, or direct paths to individual files.
-- Supports referencing shared DTOs, enums (not yet supported), or base classes from anywhere in your solution.
+## 🎯 Type Mappings
 
-**Generate and review:**
+**Basic types:**
 
-```bash
-node ../../dist/cli.js generate
-# or, after a global install:
-dotnet-to-ts generate
-```
+- Numbers: `int`, `long`, `decimal`, `float`, `double` → `number`
+- Text: `string` → `string`
+- Boolean: `bool` → `boolean`
+- Dates: `DateTime`, `DateTimeOffset` → `string`
+- IDs: `Guid` → `string`
 
-Check `output/generated.ts` for all your TypeScript interfaces—including from cross-library or shared C# sources!
+**Collections:**
 
-> **Tip:**  
-> Add new DTOs or enums?  
-> Just update the `"input"` list and re-run—dependencies will be included.
+- `List<T>`, `T[]`, `IEnumerable<T>` → `T[]`
+- `Dictionary<K, V>` → `Record<K, V>`
+
+**Nullables:**
+
+- `string?` → `string | null`
+- `int?` → `number | null`
+
+**Custom types:**
+
+- Your C# classes → TypeScript interfaces (automatically included if referenced)
 
 ---
 
-## ❗ Limitations
+## 🛠️ CLI Commands
 
-- ✅ **Supported:** Public C# classes, nested properties, lists, nullables, references by type.
-- ❌ **Not supported:** Inheritance, enums (C# enums are not yet output as TypeScript enums), dictionaries/maps, non-public/internal/private members, C# attributes, or methods.
-- ✨ Well-tested for internal use, focused on my own cases and needs.
+### `init`
+
+Initialize configuration file:
+
+```bash
+dotnet-to-ts init
+```
+
+Creates `dotnet-to-ts.config.json` in current directory.
+
+### `generate`
+
+Generate TypeScript interfaces:
+
+```bash
+dotnet-to-ts generate
+```
+
+**Options:**
+
+- `--verbose` - Show detailed generation logs
+
+**Examples:**
+
+```bash
+# Standard generation
+dotnet-to-ts generate
+
+# Verbose output
+dotnet-to-ts generate --verbose
+
+```
+
+---
+
+## 📁 Project Structure Example
+
+```
+my-dotnet-project/
+├── Backend/
+│   ├── Models/
+│   │   ├── UserDto.cs
+│   │   └── DepartmentDto.cs
+│   └── ViewModels/
+│       └── DashboardViewModel.cs
+├── Frontend/
+│   ├── src/
+│   │   └── types/
+│   │       └── generated.ts          ← Output here
+│   └── dotnet-to-ts.config.json      ← Config here
+└── Shared/
+    └── Common/
+        └── BaseDto.cs
+```
+
+**Config in `Frontend/dotnet-to-ts.config.json`:**
+
+```json
+{
+  "input": [
+    "../Backend/Models/**/*.cs",
+    "../Backend/ViewModels/**/*.cs",
+    "../Shared/Common/BaseDto.cs"
+  ],
+  "output": "src/types/generated.ts"
+}
+```
+
+---
+
+## ✅ Features
+
+- ✅ **Complex type support:** nullables, nested objects, arrays
+- ✅ **Cross-project references:** Reference DTOs from anywhere in your solution
+- ✅ **Comprehensive testing:** 100+ unit tests covering edge cases
+- ✅ **Simple configuration:** JSON config with glob pattern support
+- ✅ **Fast & lightweight:** No dependencies on .NET runtime
+
+---
+
+## ❗ Current Limitations
+
+- ❌ **Custom generic types:** Only `List<T>` and `Dictionary<K,V>` are supported. Custom generic classes like `Result<T>` or `Response<T>` are not yet converted
+- ❌ **Inheritance:** Base classes are not currently supported
+- ❌ **Enums:** C# enums are not yet converted to TypeScript enums
+- ❌ **Attributes:** C# attributes are ignored
+- ❌ **Methods:** Only properties are processed
+
+These features are planned for future releases.
 
 ---
 
 ## 🐛 Troubleshooting
 
-- **No files found:**  
-  Check `input` globs/file paths, and run the CLI from the correct directory.
-- **Malformed config:**  
-  Double-check your config for valid JSON, without trailing commas.
-- **Output not as expected:**  
-  Review your C# models/DTOs (see limitations) and examine generated TypeScript for clues.
-- **Avoid committing generated files:**  
-  Add this to your `.gitignore`:
+### No files found
 
-  ```
-  output/
-  examples/demo-app/output/
-  ```
+**Problem:** CLI reports "No files found"
+
+**Solution:**
+
+- Check your `input` glob patterns
+- Ensure you're running from the correct directory (relative to config)
+- Use `--verbose` flag to see which files are being matched
+
+### Types not generated
+
+**Problem:** Some C# classes don't appear in output
+
+**Solution:**
+
+- Ensure classes are `public`
+- Check that `.cs` files are included in `input` patterns
+- Verify C# syntax is valid (parser skips malformed classes)
+
+### Unexpected output
+
+**Problem:** Generated TypeScript doesn't match expectations
+
+**Solution:**
+
+- Review [Current Limitations](#-current-limitations)
+- Use `--verbose` to see parsing details
+- Check C# class structure matches supported patterns
 
 ---
 
-## 👤 About
+## 📚 Examples
 
-I built this CLI to make my .NET + TypeScript integration easier and less error-prone.  
-Feel free to use, fork, or adapt for your projects.
+The repository includes a working demo app:
+
+```bash
+cd examples/demo-app
+dotnet-to-ts generate
+```
+
+Check `examples/demo-app/output/generated.ts` to see the result.
 
 ---
+
+## 🧪 Testing
+
+The project uses Vitest with comprehensive test coverage:
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+```
+
+**Current coverage:** 100+ tests covering:
+
+- Type mapping (primitives, nullables, generics)
+- Complex nested objects
+- Cross-file references
+- Edge cases (empty classes, invalid syntax)
+
+---
+
+## 🚀 Development
+
+```bash
+# Clone repository
+git clone https://github.com/danielmiranda22/dotnet-to-ts.git
+cd dotnet-to-ts
+
+# Install dependencies
+npm install
+
+# Build project
+npm run build
+
+# Run tests
+npm test
+
+# Install locally for testing
+npm install -g .
+```
 
 ## 📝 License
 
-MIT  
-Use at your own risk.
+MIT © Daniel Miranda
+Feel free to read or use for your own learning or projects.
+
+---
+
+## 🙏 Acknowledgments
+
+Built to solve a real problem: keeping .NET backend types and TypeScript frontend types in sync.
+
+If this tool helps you, consider giving it a ⭐ on GitHub!
+
+---
+
+## 📞 Support
+
+- 📖 [Documentation](https://github.com/danielmiranda22/dotnet-to-ts)
+
+---
+
+**Happy coding! 🚀**
