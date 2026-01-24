@@ -3,25 +3,21 @@
  */
 
 import * as fs from 'fs';
-import * as path from 'path';
 import { DotnetToTsConfig, DEFAULT_CONFIG } from './Config.js';
 
 export class ConfigLoader {
   /**
    * Loads config from a JSON file
-   * @param configPath - Path to config file (default: "dotnet-to-ts.config.json")
+   * @param configPath
    * @returns Parsed and validated config
    */
   load(configPath: string = 'dotnet-to-ts.config.json'): DotnetToTsConfig {
-    // Check if file exists
     if (!fs.existsSync(configPath)) {
       throw new Error(`Config file not found: ${configPath}`);
     }
 
-    // Read file
     const fileContent = fs.readFileSync(configPath, 'utf-8');
 
-    // Parse JSON
     let parsed: any;
     try {
       parsed = JSON.parse(fileContent);
@@ -37,7 +33,7 @@ export class ConfigLoader {
 
   /**
    * Validates config and merges with defaults
-   * @param parsed - Parsed JSON object
+   * @param parsed
    * @returns Valid config
    */
   private validate(parsed: any): DotnetToTsConfig {
@@ -83,7 +79,7 @@ export class ConfigLoader {
 
   /**
    * Loads config or returns default if file doesn't exist
-   * @param configPath - Path to config file
+   * @param configPath
    * @returns Config (from file or default)
    */
   loadOrDefault(

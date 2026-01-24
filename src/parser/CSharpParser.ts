@@ -15,7 +15,7 @@ export interface ParsedClass {
 export class CSharpParser {
   /**
    * Parses the given C# code and extracts class definitions along with their properties.
-   * @param csharpCode - The C# code to parse.
+   * @param csharpCode
    * @returns An array of ParsedClass objects or null if parsing fails.
    */
   parse(csharpCode: string): ParsedClass | null {
@@ -30,7 +30,7 @@ export class CSharpParser {
   /**
    * Extracts properties from the given C# code.
    * Looks for: public Type PropertyName { get; set; }
-   * @param csharpCode - The C# code to extract properties from.
+   * @param csharpCode
    * @returns An array of Property objects.
    */
   private extractProperties(csharpCode: string): Property[] {
@@ -45,19 +45,14 @@ export class CSharpParser {
     // \s+                    - whitespace
     // (\w+)                  - capture group 2: property name
     // \s*\{\s*get;\s*set;\s*\}  - property getter/setter syntax
-    // OLD (broken):
-    // const propertyRegex =
-    // /public\s+(\w+(? :<\w+>)?\??)\s+(\w+)\s*\{\s*get;\s*set;\s*\}/g
-
-    // NEW (works width <List<string?>> the other one when nullable generic types it fails):
     const propertyRegex =
       /public\s+(\w+(?:<[^>]+>)?\??)\s+(\w+)\s*\{\s*get;\s*set;\s*\}/g;
 
     let match;
     while ((match = propertyRegex.exec(csharpCode)) !== null) {
       properties.push({
-        type: match[1], // Type (e.g., "int", "string", "List<string>")
-        name: match[2], // Property name (e.g., "Id", "Name")
+        type: match[1], // Type ("int", "string", "List<string>")
+        name: match[2], // Property name ("Id", "Name")
       });
     }
 
@@ -66,7 +61,7 @@ export class CSharpParser {
 
   /**
    * Extracts the class name from the given C# code.
-   * @param csharpCode - The C# code to extract the class name from.
+   * @param csharpCode
    * @returns The class name if found, otherwise null.
    */
   private extractClassName(csharpCode: string): string | null {

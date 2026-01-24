@@ -28,7 +28,7 @@ export class TSGenerator {
 
   /**
    * Generates TypeScript interface code from a parsed C# class
-   * @param parsedClass - The parsed C# class
+   * @param parsedClass
    * @returns TypeScript interface as a string
    */
   generate(parsedClass: ParsedClass): string {
@@ -73,7 +73,7 @@ export class TSGenerator {
 
   /**
    * Generates TypeScript interfaces for multiple parsed classes
-   * @param parsedClasses - Array of parsed C# classes
+   * @param parsedClasses
    * @returns TypeScript code as a string
    */
   generateMultiple(parsedClasses: ParsedClass[]): string {

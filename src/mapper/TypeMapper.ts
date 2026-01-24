@@ -31,7 +31,7 @@ export class TypeMapper {
   };
 
   map(csharpType: string): string {
-    // step 1: handle nullable types (e.g., int? -> int)
+    // Handle nullable types (int? -> int)
     const isNullable = csharpType.endsWith('?');
     if (isNullable) {
       const baseType = csharpType.slice(0, -1).trim(); // remove '?'
@@ -39,7 +39,7 @@ export class TypeMapper {
       return `${mappedBaseType} | null`;
     }
 
-    // Step 2: Handle List<T> and IList<T> (e.g., "List<string>" → "string[]")
+    // Handle List<T> and IList<T> ("List<string>" → "string[]")
     const listMatch = csharpType.match(/^(?:I)?List<(.+)>$/);
     if (listMatch && listMatch[1]) {
       console.log('Matched list type:', listMatch[1]);
@@ -54,14 +54,14 @@ export class TypeMapper {
       return `${mappedInnerType}[]`;
     }
 
-    //step 3: Handele array types (e.g., "string[]" → "string[]")
+    // Handle array types ("string[]" → "string[]")
     const arrayMatch = csharpType.match(/^(.+)\[\]$/);
     if (arrayMatch && arrayMatch[1]) {
       const mappedElementType = this.map(arrayMatch[1]);
       return `${mappedElementType}[]`;
     }
 
-    // Step 4: Handle Dictionary<TKey, TValue> (e. g., "Dictionary<string, int>" → "Record<string, number>")
+    // Handle Dictionary<TKey, TValue> ("Dictionary<string, int>" → "Record<string, number>")
     const dictionaryMatch = csharpType.match(
       /^(?:I)?Dictionary<(.+),\s*(.+)>$/,
     );
@@ -73,12 +73,12 @@ export class TypeMapper {
       return `Record<${mappedKeyType}, ${mappedValueType}>`;
     }
 
-    // Step 5: Check if it's a basic type in our mapping table
+    // Check if it's a basic type in our mapping table
     if (this.typeMap[csharpType]) {
       return this.typeMap[csharpType] as string;
     }
 
-    // Step 6: If no match, assume it's a custom type (e.g., "EntityDto", "UserDto")
+    // Step 6: If no match, assume it's a custom type ("EntityDto", "UserDto")
     // Keep it as-is because it refers to another interface
     return csharpType;
   }
