@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { FileSystem } from '../src/utils/FileSystem';
+import { FileSystem } from '../src/utils/FileSystem.js';
 import * as fs from 'fs';
 import * as path from 'path';
 

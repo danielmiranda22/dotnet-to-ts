@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-import { DEFAULT_CONFIG } from './config/Config';
-import { ConfigLoader } from './config/ConfigLoader';
-import { FileSystem } from './utils/FileSystem';
-import { CSharpParser } from './parser/CSharpParser';
-import { TypeScriptGenerator } from './generator/TypeScriptGenerator';
-import { Logger } from './utils/Logger';
+import { DEFAULT_CONFIG } from './config/Config.js';
+import { ConfigLoader } from './config/ConfigLoader.js';
+import { FileSystem } from './utils/FileSystem.js';
+import { CSharpParser } from './parser/CSharpParser.js';
+import { TypeScriptGenerator } from './generator/TypeScriptGenerator.js';
+import { Logger } from './utils/Logger.js';
 import * as fs from 'fs';
 
 async function main() {

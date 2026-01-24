@@ -4,7 +4,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { DotnetToTsConfig, DEFAULT_CONFIG } from './Config';
+import { DotnetToTsConfig, DEFAULT_CONFIG } from './Config.js';
 
 export class ConfigLoader {
   /**

@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { ConfigLoader } from '../src/config/ConfigLoader';
+import { ConfigLoader } from '../src/config/ConfigLoader.js';
 import path from 'path';
 import fs from 'fs';
-import { DEFAULT_CONFIG } from '../src/config/Config';
+import { DEFAULT_CONFIG } from '../src/config/Config.js';
 
 describe('ConfigLoader', () => {
   let loader: ConfigLoader;

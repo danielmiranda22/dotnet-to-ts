@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { TypeScriptGenerator } from '../src/generator/TypeScriptGenerator';
-import { ParsedClass } from '../src/parser/CSharpParser';
+import { TypeScriptGenerator } from '../src/generator/TypeScriptGenerator.js';
+import { ParsedClass } from '../src/parser/CSharpParser.js';
 
 describe('TypeScriptGenerator', () => {
   let generator: TypeScriptGenerator;

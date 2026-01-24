@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { CSharpParser } from '../src/parser/CSharpParser';
-import { TypeScriptGenerator } from '../src/generator/TypeScriptGenerator';
+import { CSharpParser } from '../src/parser/CSharpParser.js';
+import { TypeScriptGenerator } from '../src/generator/TypeScriptGenerator.js';
 import * as fs from 'fs';
 import * as path from 'path';
 

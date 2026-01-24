@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { TypeMapper } from '../src/mapper/TypeMapper';
+import { TypeMapper } from '../src/mapper/TypeMapper.js';
 
 describe('TypeMapper', () => {
   let mapper: TypeMapper;

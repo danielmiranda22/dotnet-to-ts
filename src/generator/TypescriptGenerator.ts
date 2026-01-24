@@ -2,8 +2,8 @@
  * TypeScriptGenerator - Generates TypeScript interface code from parsed C# classes
  */
 
-import { ParsedClass } from '../parser/CSharpParser';
-import { TypeMapper } from '../mapper/TypeMapper';
+import { ParsedClass } from '../parser/CSharpParser.js';
+import { TypeMapper } from '../mapper/TypeMapper.js';
 
 export interface GeneratorOptions {
   indentation?: string; // Default: 2 spaces
