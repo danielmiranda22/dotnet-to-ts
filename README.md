@@ -79,14 +79,18 @@ public class UserDto
     public string? Email { get; set; }
     public List<string> Roles { get; set; }
     public DateTime CreatedAt { get; set; }
+    public int? IdDepartment { get; set; }
 }
 
 // Models/Department.cs
 public class DepartmentDto
 {
     public int Id { get; set; }
-    public string Name { get; set; }
-    public List<UserDto> Members { get; set; }
+    public string Code { get; set; }
+    public string? Description { get; set; }
+    public int? ParentDepartmentId { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public List<int>? Managers { get; set; }
 }
 ```
 
@@ -100,12 +104,16 @@ export interface UserDto {
   Email: string | null;
   Roles: string[];
   CreatedAt: string;
+  IdDepartment: number | null;
 }
 
 export interface DepartmentDto {
   Id: number;
-  Name: string;
-  Members: UserDto[];
+  Code: string;
+  Description: string | null;
+  ParentDepartmentId: number | null;
+  CreatedAt: string;
+  Managers: number[] | null;
 }
 ```
 
@@ -373,12 +381,6 @@ Feel free to read or use for your own learning or projects.
 Built to solve a real problem: keeping .NET backend types and TypeScript frontend types in sync.
 
 If this tool helps you, consider giving it a ⭐ on GitHub!
-
----
-
-## 📞 Support
-
-- 📖 [Documentation](https://github.com/danielmiranda22/dotnet-to-ts)
 
 ---
 
