@@ -12,7 +12,7 @@ Manual type syncing between .NET backends and TypeScript frontends is tedious an
 
 I work with .NET MVC, and when the time comes to integrate TypeScript, I'll have a battle-tested tool ready. No manual copying, no type drift, automatic synchronization.
 
-What started as a learning project became a production-ready CLI with 166 tests, handling nullable types, nested generics, and cross-project references. It taught me how to build reliable developer tooling from scratch.
+What started as a learning project became a production-ready CLI with 100+ tests, handling nullable types, nested generics, and cross-project references. It taught me how to build reliable developer tooling from scratch.
 
 If you're working with .NET + TypeScript, this might help you too.
 
@@ -29,6 +29,10 @@ git clone https://github.com/danielmiranda22/dotnet-to-ts.git
 cd dotnet-to-ts
 npm install
 npm run build
+npm install -g .
+# Option 1: Link for development (recommended)
+npm link
+# Option 2: Install globally (if you don't plan to modify code)
 npm install -g .
 ```
 

@@ -1,0 +1,14 @@
+{
+  "input": [
+    "demo-app/Models/**/*.cs",
+    "demo-app/ViewModels/**/*.cs",
+    "../class-library/**/*.cs"
+  ],
+  "output": "output/generated.ts",
+  "options": {
+    "indentation": "  ",
+    "addTimestamp": true,
+    "exportInterfaces": true,
+    "propertyNamingConvention": "camelCase"
+  }
+}
