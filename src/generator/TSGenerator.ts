@@ -2,13 +2,14 @@
  * TypeScriptGenerator - Generates TypeScript interface code from parsed C# classes
  */
 
-import { ParsedClass } from '../parser/CSharpParser.js';
+import { ParsedClass, Property } from '../parser/CSharpParser.js';
 import { TypeMapper } from '../mapper/TypeMapper.js';
 
 export interface GeneratorOptions {
   indentation?: string; // Default: 2 spaces
   addTimestamp?: boolean; // Add generation timestamp comment
   exportInterfaces?: boolean; // Add "export" keyword
+  propertyNamingConvention?: 'camelCase' | 'PascalCase' | 'preserve'; // Property naming convention
 }
 
 export class TSGenerator {
@@ -23,6 +24,7 @@ export class TSGenerator {
       indentation: options.indentation ?? '  ', // 2 spaces
       addTimestamp: options.addTimestamp ?? true,
       exportInterfaces: options.exportInterfaces ?? true,
+      propertyNamingConvention: options.propertyNamingConvention ?? 'preserve',
     };
   }
 
@@ -44,7 +46,6 @@ export class TSGenerator {
       lines.push('');
     }
 
-    // Add export keyword (optional)
     const exportKeyword = this.options.exportInterfaces ? 'export ' : '';
 
     // Interface declaration
@@ -58,17 +59,34 @@ export class TSGenerator {
       parsedClass.properties.forEach((property) => {
         // Map C# type to TypeScript type
         const tsType = this.typeMapper.map(property.type ?? 'any');
-
+        let propertyName = this.applyPropertyNameConvention(property);
         // Add property line
-        lines.push(`${this.options.indentation}${property.name}: ${tsType};`);
+        lines.push(`${this.options.indentation}${propertyName}: ${tsType};`);
       });
     }
 
     // Close interface
     lines.push('}');
-
     // Join all lines with newlines
     return lines.join('\n');
+  }
+
+  private applyPropertyNameConvention(property: Property) {
+    let propertyName = property.name ?? '';
+    switch (this.options.propertyNamingConvention) {
+      case 'camelCase':
+        propertyName =
+          propertyName.charAt(0).toLowerCase() + propertyName.slice(1);
+        break;
+      case 'PascalCase':
+        propertyName =
+          propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
+        break;
+      case 'preserve':
+      default:
+        break;
+    }
+    return propertyName;
   }
 
   /**

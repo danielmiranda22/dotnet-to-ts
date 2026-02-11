@@ -37,28 +37,8 @@ export class ConfigLoader {
    * @returns Valid config
    */
   private validate(parsed: any): DotnetToTsConfig {
-    // Validate input
-    if (!parsed.input) {
-      throw new Error('Config must have "input" field');
-    }
-
-    if (!Array.isArray(parsed.input)) {
-      throw new Error('"input" must be an array of glob patterns');
-    }
-
-    if (parsed.input.length === 0) {
-      throw new Error('"input" array cannot be empty');
-    }
-
-    // Validate output
-    if (!parsed.output) {
-      throw new Error('Config must have "output" field');
-    }
-
-    if (typeof parsed.output !== 'string') {
-      throw new Error('"output" must be a string');
-    }
-
+    this.validateInput(parsed);
+    this.validateOutput(parsed);
     // Merge with defaults
     const config: DotnetToTsConfig = {
       input: parsed.input,
@@ -71,10 +51,37 @@ export class ConfigLoader {
         exportInterfaces:
           parsed.options?.exportInterfaces ??
           DEFAULT_CONFIG.options?.exportInterfaces,
+        propertyNamingConvention:
+          parsed.options?.propertyNamingConvention ??
+          DEFAULT_CONFIG.options?.propertyNamingConvention,
       },
     };
 
     return config;
+  }
+
+  private validateOutput(parsed: any) {
+    if (!parsed.output) {
+      throw new Error('Config must have "output" field');
+    }
+
+    if (typeof parsed.output !== 'string') {
+      throw new Error('"output" must be a string');
+    }
+  }
+
+  private validateInput(parsed: any) {
+    if (!parsed.input) {
+      throw new Error('Config must have "input" field');
+    }
+
+    if (!Array.isArray(parsed.input)) {
+      throw new Error('"input" must be an array of glob patterns');
+    }
+
+    if (parsed.input.length === 0) {
+      throw new Error('"input" array cannot be empty');
+    }
   }
 
   /**
@@ -92,7 +99,6 @@ export class ConfigLoader {
       if (error instanceof Error && error.message.includes('not found')) {
         return DEFAULT_CONFIG;
       }
-      // Re-throw other errors (invalid JSON, validation, etc.)
       throw error;
     }
   }

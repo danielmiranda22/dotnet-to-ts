@@ -35,6 +35,14 @@ export interface GeneratorConfigOptions {
    * Add export keyword to interfaces (default: true)
    */
   exportInterfaces?: boolean;
+
+  /**
+   * Property naming convention
+   * (default: "preserve" - keep original C# naming)
+   * camelCase - Js/TS standard
+   * PascalCase - C# Force PascalCase (useful if source has inconsistent casing)
+   */
+  propertyNamingConvention?: 'camelCase' | 'PascalCase' | 'preserve';
 }
 
 /**
@@ -47,5 +55,6 @@ export const DEFAULT_CONFIG: DotnetToTsConfig = {
     indentation: '  ',
     addTimestamp: true,
     exportInterfaces: true,
+    propertyNamingConvention: 'preserve',
   },
 };

@@ -21,9 +21,7 @@ export class CSharpParser {
   parse(csharpCode: string): ParsedClass | null {
     const className = this.extractClassName(csharpCode);
     if (!className) return null;
-
     const properties = this.extractProperties(csharpCode);
-
     return { name: className, properties: properties };
   }
 
@@ -55,7 +53,6 @@ export class CSharpParser {
         name: match[2], // Property name ("Id", "Name")
       });
     }
-
     return properties;
   }
 

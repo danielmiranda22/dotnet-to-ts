@@ -8,11 +8,11 @@
 
 ## Why I Built This
 
-I work with .NET MVC and wanted to learn TypeScript properly. So, I decided to build something practical: a tool that generates TypeScript interfaces from C# classes.
+Manual type syncing between .NET backends and TypeScript frontends is tedious and error-prone. I built this tool to eliminate that pain.
 
-The idea is simple - if I ever need to integrate TypeScript with a .NET backend (whether at my current company or elsewhere), I'll have a tool ready that keeps types in sync automatically. No manual copying, no drift between frontend and backend.
+I work with .NET MVC, and when the time comes to integrate TypeScript, I'll have a battle-tested tool ready. No manual copying, no type drift, automatic synchronization.
 
-What started as a learning project turned into a properly tested CLI tool (100+ tests) that handles real scenarios like nullables, collections, and cross-file references.
+What started as a learning project became a production-ready CLI with 166 tests, handling nullable types, nested generics, and cross-project references. It taught me how to build reliable developer tooling from scratch.
 
 If you're working with .NET + TypeScript, this might help you too.
 
@@ -51,7 +51,8 @@ This creates `dotnet-to-ts.config.json`:
   "options": {
     "indentation": "  ",
     "addTimestamp": true,
-    "exportInterfaces": true
+    "exportInterfaces": true,
+    "propertyNamingConvention": "preserve"
   }
 }
 ```
@@ -97,23 +98,23 @@ public class DepartmentDto
 **Generated TypeScript:**
 
 ```typescript
-// generated/types.ts
+// generated/types.ts (with propertyNamingConvention: "camelCase")
 export interface UserDto {
-  Id: number;
-  Name: string;
-  Email: string | null;
-  Roles: string[];
-  CreatedAt: string;
-  IdDepartment: number | null;
+  id: number;
+  name: string;
+  email: string | null;
+  roles: string[];
+  createdAt: string;
+  idDepartment: number | null;
 }
 
 export interface DepartmentDto {
-  Id: number;
-  Code: string;
-  Description: string | null;
-  ParentDepartmentId: number | null;
-  CreatedAt: string;
-  Managers: number[] | null;
+  id: number;
+  code: string;
+  description: string | null;
+  parentDepartmentId: number | null;
+  createdAt: string;
+  managers: number[] | null;
 }
 ```
 
@@ -151,10 +152,23 @@ All paths are resolved **relative to your config file**.
   "options": {
     "indentation": "  ", // Use spaces or tabs
     "addTimestamp": true, // Add generation timestamp
-    "exportInterfaces": true // Export all interfaces
+    "exportInterfaces": true, // Export all interfaces
+    "propertyNamingConvention": "camelCase" // Property naming style
   }
 }
 ```
+
+**Property Naming Convention:**
+
+- `"preserve"` (default) - Keep original C# naming (typically PascalCase)
+- `"camelCase"` - Convert to camelCase (JavaScript/TypeScript convention)
+- `"PascalCase"` - Force PascalCase for all properties
+
+**When to use each:**
+
+- Use `"preserve"` if your API returns JSON with PascalCase properties
+- Use `"camelCase"` if using ASP.NET Core with default camelCase JSON serialization (most common)
+- Use `"PascalCase"` to force consistent casing if your C# code has mixed conventions
 
 ---
 

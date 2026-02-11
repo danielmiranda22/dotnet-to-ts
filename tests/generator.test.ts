@@ -225,6 +225,40 @@ describe('TSGenerator', () => {
     });
   });
 
+  describe('PropertyNameConventions', () => {
+    it('should preserve property names by default', () => {
+      const parsed: ParsedClass = {
+        name: 'UserDto',
+        properties: [{ name: 'FirstName', type: 'string' }],
+      };
+
+      const result = generator.generate(parsed);
+      expect(result).toContain('FirstName: string;');
+    });
+
+    it('should convert property names to camelCase', () => {
+      const gen = new TSGenerator({ propertyNamingConvention: 'camelCase' });
+      const parsed: ParsedClass = {
+        name: 'UserDto',
+        properties: [{ name: 'FirstName', type: 'string' }],
+      };
+
+      const result = gen.generate(parsed);
+      expect(result).toContain('firstName: string;');
+    });
+
+    it('should convert property names to PascalCase', () => {
+      const gen = new TSGenerator({ propertyNamingConvention: 'PascalCase' });
+      const parsed: ParsedClass = {
+        name: 'UserDto',
+        properties: [{ name: 'firstName', type: 'string' }],
+      };
+
+      const result = gen.generate(parsed);
+      expect(result).toContain('FirstName: string;');
+    });
+  });
+
   describe('generateMultiple()', () => {
     it('should generate multiple interfaces', () => {
       const parsed1: ParsedClass = {
